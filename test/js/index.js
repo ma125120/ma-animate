@@ -10,6 +10,8 @@ new Vue({
 	data() {
 		return {
 			play: false,
+			time: 0,
+			time_flag: false,
 			animates: [{
 				title:'向上收缩',
 				classes: 'slide-up',
@@ -131,8 +133,21 @@ new Vue({
 			animates[i] = obj;
 			this.animates = animates;
 		},
-		togglePlay() {
-			this.play = !this.play;
+		toggleVueState(state, flag) {
+			if(flag != false && !flag) {
+				this[state] = !this[state];
+			} else {
+				this[state] = flag;
+			}
+		},
+		changeTime(e) {
+			var time = e.target.value;
+			if(time>0) {
+				this.time = time;
+			} else {
+				this.time = 0;
+			}
+			this.toggleVueState('time_flag', false)
 		}
 	}
 })

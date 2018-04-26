@@ -8,23 +8,34 @@
 </head>
 <body>
 	<div id="app">
-		<div  id="copy">按钮<span>sda</span></div>
-		<button class="ma-btn">按钮</button>
 		<button 
 					:class="['ma-btn',
 									play?'warning':'success']
 									" 
-					@click="togglePlay">{{(play)?'全部暂停':'全部启动'}}</button>
-		<button class="ma-btn" @click="copy">测试selection</button>
+					@click="toggleVueState('play')">{{(play)?'全部暂停':'全部启动'}}</button>
+		<button 
+					:class="['ma-btn',
+									time_flag?'warning':'success']
+									" 
+					@click="toggleVueState('time_flag',true)">设置动画时长</button>
+		<transition name="left-open-close">
+			<input type="text" 
+					:value="time" 
+					class="time-input"
+					v-if="time_flag"
+					@change="changeTime">
+		</transition>
+		
 		<ul class="line-animate flex">
 			<li class="slide-li text-center"
 					v-for="(animate,i) in animates"
 					:key = "i">
 				<h3>{{animate.title}}</h3>
-				<div :class="['ma-animate',
+				<div :class="['ma-animate infinite',
 											animate.classes,
 											(animate.play||play)?'':'stop']
-										"></div>
+										"
+							:style="time>0?`animation-duration: ${time}s`:''"></div>
 				<div class="flex between btn-group">
 					<button :class="['ma-btn',
 													(animate.play||play)?'warning':'success']
