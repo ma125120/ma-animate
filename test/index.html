@@ -1,0 +1,57 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="../lib/css/animate.css">
+	<link rel="stylesheet" href="../lib/css/common.css">
+	<link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+	<div id="app">
+		<div  id="copy">按钮<span>sda</span></div>
+		<button class="ma-btn">按钮</button>
+		<button 
+					:class="['ma-btn',
+									play?'warning':'success']
+									" 
+					@click="togglePlay">{{(play)?'全部暂停':'全部启动'}}</button>
+		<button class="ma-btn" @click="copy">测试selection</button>
+		<ul class="line-animate flex">
+			<li class="slide-li text-center"
+					v-for="(animate,i) in animates"
+					:key = "i">
+				<h3>{{animate.title}}</h3>
+				<div :class="['ma-animate',
+											animate.classes,
+											(animate.play||play)?'':'stop']
+										"></div>
+				<div class="flex between btn-group">
+					<button :class="['ma-btn',
+													(animate.play||play)?'warning':'success']
+													" 
+									@click="toggleState(i,'play')">{{(animate.play||play)?'暂停动画':'启动动画'}}</button>
+					<button 
+									class="ma-btn" 
+									@click="toggleState(i,'display')">{{animate.display?'收起代码':'查看代码'}}</button>
+				</div>
+				<transition name="slide-ud">
+					<div class="more" v-if="animate.display">
+						<div class="text-left" :ref="'copy'+i">{{animate.code}}</div>
+						<button class="ma-btn ma-btn__copy" @click="copy(i)">复制代码</button>
+					</div>
+				</transition>
+				
+			</li>
+		</ul>
+	</div>
+	
+	<script src="js/vue.min.js"></script>
+	<script src="js/index.js"></script>
+	<script>
+		// document.querySelectorAll(".slide")[1].addEventListener("click",function() {
+		// 	console.dir(this)
+		// })
+	</script>
+</body>
+</html>
+
