@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>8行代码实现复制内容至剪切板</title>
+	<title>9行代码实现复制内容至剪切板</title>
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
   <meta name="renderer" content="webkit">
@@ -39,7 +39,7 @@
 		btn.addEventListener("click",function() {
 			copy(copy_text);
 		},false); 
-		
+
 		function copy(el) {
 			var range = document.createRange();
 			var end = el.childNodes.length;
@@ -47,6 +47,7 @@
 			range.setEnd(el,end);
 
 			var selection = window.getSelection();
+			selection.removeAllRanges();
 			selection.addRange(range);
 			document.execCommand("copy",false,null);
 			selection.removeRange(range);
